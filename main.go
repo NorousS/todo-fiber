@@ -8,15 +8,17 @@ import (
 )
 
 func main() {
-	// Инициализация БД
 	configs.InitDB()
 	configs.DB.AutoMigrate(&models.Todo{})
 
 	app := fiber.New()
 
 	// Роуты
-	app.Get("/todos", handlers.GetTodos)
+	app.Get("/todos", handlers.GetAllTodos)
+	app.Get("/todos/:id", handlers.GetTodoByID)
 	app.Post("/todos", handlers.CreateTodo)
+	app.Put("/todos/:id", handlers.UpdateTodo)
+	app.Delete("/todos/:id", handlers.DeleteTodo)
 
 	app.Listen(":3000")
 }
